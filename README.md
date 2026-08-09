@@ -75,6 +75,12 @@ Before wiring the physical hardware, the LED and servo circuit was tested and ve
 
 <img src="images/wokwi-test.gif" width="500">
 
+### Live Simulation
+
+Explore the interactive Wokwi simulation to view the complete circuit, inspect the wiring, and run the ESP32 program.
+
+🔗 **Wokwi Project:** [**Click Here!**](https://wokwi.com/projects/471855509335645185)
+
 ---
 
 ## 6. ESP32 Integration
