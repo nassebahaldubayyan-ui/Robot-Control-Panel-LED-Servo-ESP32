@@ -71,6 +71,8 @@ Before wiring the physical hardware, the LED and servo circuit was tested and ve
 
 <img src="images/wokwi-circuit.png" width="500">
 
+### Simulation
+
 <img src="images/wokwi-test.gif" width="500">
 
 ---
