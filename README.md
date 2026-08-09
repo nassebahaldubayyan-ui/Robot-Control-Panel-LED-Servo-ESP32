@@ -53,7 +53,7 @@ The interface (`style.css`) uses a **Soft Tactile Remote** style:
 * Pressed-in button animations
 * Active-state highlighting (sage for LED ON, clay for LED OFF/selected servo position)
 
-<img src="images/styled-panel.png" width="300">
+<img src="images/styled-panel.png" width="500">
 
 ---
 
