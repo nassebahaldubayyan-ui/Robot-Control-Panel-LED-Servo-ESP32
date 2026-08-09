@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robot Control Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="device">
+  <h1>Robot Control</h1>
+  <p class="subtitle">LED &amp; Servo Panel</p>
+
+  <p class="section-label">LED</p>
+  <div class="led-row">
+    <button id="ledOnBtn" class="led-btn on" onclick="setLed(1)">&#9679; ON</button>
+    <button id="ledOffBtn" class="led-btn off" onclick="setLed(0)">&#9675; OFF</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="section-label">Servo</p>
+  <div class="servo-row">
+    <button id="servoBackward" class="servo-btn" onclick="setServo('backward')">Backward</button>
+    <button id="servoNormal" class="servo-btn" onclick="setServo('normal')">Normal</button>
+    <button id="servoForward" class="servo-btn" onclick="setServo('forward')">Forward</button>
+  </div>
+
+  <div id="status">Ready</div>
+</div>
+
+<script>
+const API_URL = "update_command.php";
+
+function setActiveLed(value) {
+  document.getElementById('ledOnBtn').classList.toggle('active', value === 1);
+  document.getElementById('ledOffBtn').classList.toggle('active', value === 0);
+}
+
+function setActiveServo(value) {
+  document.getElementById('servoBackward').classList.toggle('active', value === 'backward');
+  document.getElementById('servoNormal').classList.toggle('active', value === 'normal');
+  document.getElementById('servoForward').classList.toggle('active', value === 'forward');
+}
+
+function sendUpdate(type, value) {
+  document.getElementById('status').textContent = "Sending...";
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `type=${type}&value=${value}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "ok") {
+      document.getElementById('status').textContent = `${type} set to ${value}`;
+      if (type === 'led') setActiveLed(parseInt(value));
+      if (type === 'servo') setActiveServo(value);
+    } else {
+      document.getElementById('status').textContent = `Error: ${data.error || 'unknown'}`;
+    }
+  })
+  .catch(err => {
+    document.getElementById('status').textContent = "Request failed";
+    console.error(err);
+  });
+}
+
+function setLed(value) {
+  sendUpdate('led', value);
+}
+
+function setServo(value) {
+  sendUpdate('servo', value);
+}
+</script>
+
+</body>
+</html>
